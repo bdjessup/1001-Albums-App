@@ -11,7 +11,7 @@ import { ErrorView, LoadingView } from "@/components/query-state";
 import { AppText } from "@/components/text";
 import { currentAlbumNumber } from "@/core/history";
 import { computeStats, globalRatingFor, LIST_SIZE } from "@/core/stats";
-import { shareAlbum, useRateOnSite } from "@/data/actions";
+import { shareAlbum, useOpenProjectPage } from "@/data/actions";
 import { useAlbumColors } from "@/data/album-colors";
 import { useAlbumStats, useNumberedHistory, useProject, usePullToRefresh } from "@/data/queries";
 import { NAV_BAR_HEIGHT, TAB_BAR_HEIGHT } from "@/theme/layout";
@@ -26,7 +26,7 @@ export default function TodayScreen() {
   const { refreshing, onRefresh } = usePullToRefresh(refetch);
   const history = useNumberedHistory();
   const { data: albumStats } = useAlbumStats();
-  const rateOnSite = useRateOnSite();
+  const openProjectPage = useOpenProjectPage();
   const album = project?.currentAlbum ?? null;
   const colors = useAlbumColors(album);
 
@@ -69,7 +69,7 @@ export default function TodayScreen() {
           description={
             finished
               ? `${countFormat.format(stats.generated)} albums, done. Your history and stats are all still here.`
-              : "Your next album will show up here. Pull down on History to refresh."
+              : "Your next album will show up here. Tap Refresh to check again."
           }
           action={finished ? undefined : { label: "Refresh", onPress: () => refetch() }}
         />
@@ -109,7 +109,7 @@ export default function TodayScreen() {
         {project.paused ? (
           <View style={[styles.paused, { backgroundColor: theme.colors.accentSoft }]}>
             <Icon name="paused" size={20} color={theme.colors.text} />
-            <AppText variant="subheadline" style={styles.pausedText} onPress={rateOnSite}>
+            <AppText variant="subheadline" style={styles.pausedText} onPress={openProjectPage}>
               Your project is paused. New albums resume when you unpause it on 1001 Albums Generator.
             </AppText>
           </View>
