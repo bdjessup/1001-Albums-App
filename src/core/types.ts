@@ -43,7 +43,14 @@ export interface Album {
 export type AlbumRating = 1 | 2 | 3 | 4 | 5 | "did-not-listen" | null;
 
 export interface HistoryEntry {
+  /**
+   * 1-based position in the API's history array (oldest first), counted
+   * before malformed entries are dropped, so one bad entry can't shift the
+   * album numbers that follow it.
+   */
+  position: number;
   album: Album;
+  /** The API omits `rating` entirely while an album is unrated. */
   rating: AlbumRating;
   review: string | null;
   /** ISO timestamp of the day the album was generated for this project. */
@@ -57,7 +64,12 @@ export type UpdateFrequency = "daily" | "dailyWithWeekends" | (string & {});
 
 export interface Project {
   name: string;
+  /** e.g. https://1001albumsgenerator.com/shares/<id> */
   shareableUrl: string | null;
+  /**
+   * The API has no project-level flag for group members: a project in a group
+   * reports `group.paused`, and that is what's used here.
+   */
   paused: boolean;
   updateFrequency: UpdateFrequency;
   currentAlbum: Album | null;
@@ -66,20 +78,23 @@ export interface Project {
   history: HistoryEntry[];
 }
 
+/**
+ * One album from `GET /albums/stats`: global figures across every project.
+ * The response covers every album that has been in any edition of the list
+ * (1,101 in Nov 2026), so its length is not the size of a project's pool.
+ */
 export interface AlbumStatEntry {
-  albumName: string;
-  albumArtist: string;
-  albumSlug: string;
-  albumSpotifyId: string | null;
-  albumCoverUrl: string | null;
+  name: string;
+  artist: string;
+  /** Not unique: "third" is both Portishead's and Soft Machine's. */
+  slug: string;
+  spotifyId: string | null;
   averageRating: number;
-  totalRating: number;
-  totalVotes: number;
-  globalAverageRating: number;
-  globalTotalRating: number;
-  globalTotalVotes: number;
+  votes: number;
+  /** How split opinion is; higher = more divisive. */
+  controversialScore: number | null;
 }
 
 export interface AlbumStats {
-  stats: AlbumStatEntry[];
+  albums: AlbumStatEntry[];
 }

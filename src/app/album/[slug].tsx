@@ -17,12 +17,13 @@ import { NAV_BAR_HEIGHT } from "@/theme/layout";
 const dateFormat = new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric", year: "numeric" });
 
 export default function AlbumScreen() {
-  const { slug } = useLocalSearchParams<{ slug: string }>();
+  // `position` picks the right entry when an album came up more than once.
+  const { slug, position } = useLocalSearchParams<{ slug: string; position?: string }>();
   const insets = useSafeAreaInsets();
   const { data: project, isPending } = useProject();
   const history = useNumberedHistory();
   const { data: albumStats } = useAlbumStats();
-  const entry = findEntry(history, slug);
+  const entry = findEntry(history, slug, position ? Number(position) : undefined);
   const album = entry?.album ?? (project?.currentAlbum?.slug === slug ? project.currentAlbum : null);
   const colors = useAlbumColors(album);
 

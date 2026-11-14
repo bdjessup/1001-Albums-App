@@ -81,32 +81,37 @@ export const projectRaw = {
   updateFrequency: "dailyWithWeekends",
   currentAlbum: allHopeIsGoneRaw,
   currentAlbumNotes: "  ",
-  // Deliberately out of order: normalize sorts oldest first.
+  // Oldest first, like the live API. The two malformed entries (positions 3
+  // and 5) are dropped, but the albums after them keep their numbers.
   history: [
-    { album: morningGloryRaw, rating: 2, review: "Fine.", revealedAlbum: true, generatedAt: "2026-10-04T05:00:00.000Z", globalRating: 3.6 },
-    { album: suicideRaw, rating: "did-not-listen", revealedAlbum: true, generatedAt: "2026-10-03T05:00:00.000Z", globalRating: 2.9 },
     { album: channelOrangeRaw, rating: 5, review: "  Pyramids!  ", revealedAlbum: true, generatedAt: "2026-09-30T05:00:00.000Z", globalRating: 3.9 },
     { album: surferRosaRaw, rating: 4, revealedAlbum: true, generatedAt: "2026-10-01T05:00:00.000Z", globalRating: 3.7 },
-    { album: suicideRaw, rating: null, revealedAlbum: false, generatedAt: "not a date", globalRating: null },
     { album: { name: "Broken" }, rating: 3, generatedAt: "2026-10-02T05:00:00.000Z" },
+    { album: suicideRaw, rating: "did-not-listen", revealedAlbum: true, generatedAt: "2026-10-03T05:00:00.000Z", globalRating: 2.9 },
+    { album: suicideRaw, rating: null, revealedAlbum: false, generatedAt: "not a date", globalRating: null },
+    { album: morningGloryRaw, rating: 2, review: "Fine.", revealedAlbum: true, generatedAt: "2026-10-04T05:00:00.000Z", globalRating: 3.6 },
   ],
 };
 
+/** Same shape as the live `GET /albums/stats` (see live-album-stats.json). */
 export const albumStatsRaw = {
-  stats: [
+  albums: [
     {
-      albumName: "All Hope Is Gone",
-      albumArtist: "Slipknot",
-      albumSlug: "all-hope-is-gone",
-      albumSpotifyId: "0hFWapnP7orzXCMwNU5DuA",
-      albumCoverUrl: null,
-      averageRating: 2.4,
-      totalRating: 240,
-      totalVotes: 100,
-      globalAverageRating: 2.51,
-      globalTotalRating: 2510,
-      globalTotalVotes: 1000,
+      votes: 1000,
+      averageRating: 2.51,
+      genres: ["metal"],
+      styles: ["nu-metal"],
+      name: "All Hope Is Gone",
+      artist: "Slipknot",
+      artistOrigin: "us",
+      releaseDate: "2008",
+      images: [],
+      slug: "all-hope-is-gone",
+      id: "0hFWapnP7orzXCMwNU5DuA",
+      spotifyId: "0hFWapnP7orzXCMwNU5DuA",
+      controversialScore: 1.1,
+      globalReviewsUrl: "https://1001albumsgenerator.com/albums/0hFWapnP7orzXCMwNU5DuA/all-hope-is-gone",
     },
-    { albumName: "Broken entry" },
+    { name: "Broken entry" },
   ],
 };

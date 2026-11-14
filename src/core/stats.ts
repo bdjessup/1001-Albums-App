@@ -1,7 +1,10 @@
 import { decadeOf, formatGenre, releaseYear } from "./album";
 import type { AlbumStats, HistoryEntry } from "./types";
 
-/** The list's nominal size; the generator's pool is used when known. */
+/**
+ * The list's size. `/albums/stats` can't stand in for it: it spans every
+ * edition of the list (1,101 albums in Nov 2026), not one project's pool.
+ */
 export const LIST_SIZE = 1001;
 
 export interface GroupStat {
@@ -68,15 +71,15 @@ function groupBy(entries: HistoryEntry[], keysOf: (entry: HistoryEntry) => { key
 
 export function computeStats(
   history: readonly HistoryEntry[],
-  options: { albumStats?: AlbumStats | null; minGenreRatings?: number; disagreementCount?: number } = {},
+  options: { minGenreRatings?: number; disagreementCount?: number } = {},
 ): ProjectStats {
-  const { albumStats, minGenreRatings = 3, disagreementCount = 5 } = options;
+  const { minGenreRatings = 3, disagreementCount = 5 } = options;
   const entries = [...history];
   const rated = entries.filter((e): e is HistoryEntry & { rating: 1 | 2 | 3 | 4 | 5 } => typeof e.rating === "number");
   const distribution: ProjectStats["distribution"] = [0, 0, 0, 0, 0];
   for (const e of rated) distribution[(e.rating - 1) as 0 | 1 | 2 | 3 | 4] += 1;
 
-  const total = Math.max(albumStats?.stats.length || LIST_SIZE, entries.length);
+  const total = Math.max(LIST_SIZE, entries.length);
 
   const decades = groupBy(entries, (e) => {
     const year = releaseYear(e.album);
@@ -134,14 +137,20 @@ export function computeStats(
   };
 }
 
-/** Global average for one album, looked up by slug (then Spotify id). */
+/**
+ * Global average for one album. Matched on Spotify id first, since slugs
+ * repeat ("third"); a slug match is used only when it is unambiguous.
+ */
 export function globalRatingFor(
   albumStats: AlbumStats | null | undefined,
   album: { slug: string; spotifyId: string | null },
 ): { average: number; votes: number } | null {
-  const entry =
-    albumStats?.stats.find((s) => s.albumSlug === album.slug) ??
-    (album.spotifyId ? albumStats?.stats.find((s) => s.albumSpotifyId === album.spotifyId) : undefined);
-  if (!entry || entry.globalTotalVotes === 0) return null;
-  return { average: entry.globalAverageRating, votes: entry.globalTotalVotes };
+  const albums = albumStats?.albums ?? [];
+  let entry = album.spotifyId ? albums.find((s) => s.spotifyId === album.spotifyId) : undefined;
+  if (!entry) {
+    const bySlug = albums.filter((s) => s.slug === album.slug);
+    if (bySlug.length === 1) entry = bySlug[0];
+  }
+  if (!entry || entry.votes === 0) return null;
+  return { average: entry.averageRating, votes: entry.votes };
 }

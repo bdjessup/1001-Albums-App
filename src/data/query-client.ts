@@ -53,6 +53,7 @@ export const queryPersister = createAsyncStoragePersister({
 export const persistOptions = {
   persister: queryPersister,
   maxAge: 30 * DAY,
-  // Bump when a cached shape changes so old caches are discarded.
-  buster: "1",
+  // Bump when a cached shape changes so old caches are discarded
+  // (2: live /albums/stats shape, history positions).
+  buster: "2",
 };

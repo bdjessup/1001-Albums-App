@@ -56,5 +56,5 @@ src/
 ## Data
 
 - The 1001 Albums Generator API is public, unauthenticated and **read-only**: ratings and reviews are written on the website, so "Rate on 1001 Albums" opens the project page in an in-app browser and the app refreshes when you return.
-- It allows roughly **3 requests a minute**. All requests share one queued rate limiter, and the query cache is persisted to SQLite. The app opens instantly (even offline) and only refetches when data is stale: once a day for the project, or after 15 minutes; every 12 hours for global stats.
+- It is said to allow roughly **3 requests a minute** (responses carry no rate-limit headers). All requests share one queued rate limiter, and the query cache is persisted to SQLite. The app opens instantly (even offline) and only refetches when data is stale: once a day for the project, or after 15 minutes; every 12 hours for global stats.
 - Album-art colours are sampled on-device and cached per cover.

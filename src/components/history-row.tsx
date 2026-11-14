@@ -32,7 +32,7 @@ export const HistoryRow = memo(function HistoryRow({
   const play = pickStreamingLinks(album, preferredService).primary;
 
   return (
-    <Link href={{ pathname: "/album/[slug]", params: { slug: album.slug } }} asChild>
+    <Link href={{ pathname: "/album/[slug]", params: { slug: album.slug, position: String(entry.position) } }} asChild>
       <Link.Trigger>
         <Pressable
           android_ripple={{ color: theme.colors.fill }}

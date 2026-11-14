@@ -58,7 +58,7 @@ export default function TodayScreen() {
   }
 
   if (!album) {
-    const stats = computeStats(project.history, { albumStats });
+    const stats = computeStats(project.history);
     const finished = stats.generated >= stats.total;
     return (
       <>
@@ -78,8 +78,9 @@ export default function TodayScreen() {
   }
 
   const number = currentAlbumNumber(project);
-  const total = albumStats?.stats.length || LIST_SIZE;
-  const entry = history.find((e) => e.album.uuid === album.uuid);
+  const total = Math.max(LIST_SIZE, number ?? 0);
+  // Albums can repeat in a project; today's is the latest occurrence.
+  const entry = history.findLast((e) => e.album.uuid === album.uuid);
   const topInset = insets.top + NAV_BAR_HEIGHT;
 
   return (
