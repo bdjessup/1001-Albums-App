@@ -1,6 +1,5 @@
 import { router } from "expo-router";
 import { RefreshControl, ScrollView, StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { AlbumBody } from "@/components/album-body";
 import { AlbumHero } from "@/components/album-hero";
@@ -14,14 +13,15 @@ import { computeStats, globalRatingFor, LIST_SIZE } from "@/core/stats";
 import { shareAlbum, useOpenProjectPage } from "@/data/actions";
 import { useAlbumColors } from "@/data/album-colors";
 import { useAlbumStats, useNumberedHistory, useProject, usePullToRefresh } from "@/data/queries";
-import { NAV_BAR_HEIGHT, TAB_BAR_HEIGHT } from "@/theme/layout";
+import { useHeaderInset, useTabBarInset } from "@/theme/layout";
 import { useTheme } from "@/theme/theme-context";
 
 const countFormat = new Intl.NumberFormat();
 
 export default function TodayScreen() {
   const theme = useTheme();
-  const insets = useSafeAreaInsets();
+  const headerInset = useHeaderInset();
+  const tabBarInset = useTabBarInset();
   const { data: project, error, isPending, refetch } = useProject();
   const { refreshing, onRefresh } = usePullToRefresh(refetch);
   const history = useNumberedHistory();
@@ -81,19 +81,18 @@ export default function TodayScreen() {
   const total = Math.max(LIST_SIZE, number ?? 0);
   // Albums can repeat in a project; today's is the latest occurrence.
   const entry = history.findLast((e) => e.album.uuid === album.uuid);
-  const topInset = insets.top + NAV_BAR_HEIGHT;
 
   return (
     <>
       {actions}
       <ScrollView
         contentInsetAdjustmentBehavior="never"
-        contentContainerStyle={{ paddingBottom: insets.bottom + TAB_BAR_HEIGHT + 32 }}
+        contentContainerStyle={{ paddingBottom: tabBarInset + 32 }}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            progressViewOffset={topInset}
+            progressViewOffset={headerInset}
             tintColor={theme.colors.textSecondary}
             colors={[theme.colors.accent]}
             progressBackgroundColor={theme.colors.surface}
@@ -103,7 +102,7 @@ export default function TodayScreen() {
         <AlbumHero
           album={album}
           colors={colors}
-          topInset={topInset}
+          topInset={headerInset}
           eyebrow={number ? `Today · Album ${countFormat.format(number)} of ${countFormat.format(total)}` : "Today"}
         />
         {project.paused ? (
