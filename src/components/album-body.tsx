@@ -46,7 +46,11 @@ export function AlbumBody({
     <View style={styles.container}>
       <ListenActions album={album} primary={primary} others={others} accent={colors?.accent ?? theme.colors.accent} />
 
-      <Section title="Your rating" padded={false}>
+      <Section
+        title="Your rating"
+        footer="Ratings are saved on the 1001 Albums website because its API is read-only."
+        padded={false}
+      >
         <Rows>
           {rating !== null ? (
             <View style={styles.ratingBlock}>
