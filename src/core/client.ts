@@ -5,9 +5,10 @@ export const SITE_URL = "https://1001albumsgenerator.com";
 export const API_BASE_URL = `${SITE_URL}/api/v1`;
 
 /**
- * The API allows roughly three requests per minute per client. Going over
- * returns 429s, so every request goes through one shared limiter and screens
- * lean on the persisted query cache rather than refetching.
+ * The API is said to allow roughly three requests per minute per client
+ * (per the albums-generator-client package; responses carry no rate-limit
+ * headers to confirm it). Every request goes through one shared limiter and
+ * screens lean on the persisted query cache rather than refetching.
  */
 export const RATE_LIMIT = { limit: 3, windowMs: 60_000 } as const;
 

@@ -14,9 +14,11 @@ import { AppText } from "./text";
 function errorMessage(error: unknown, projectId: string): string {
   if (isApiError(error)) {
     switch (error.kind) {
+      // The API answers 404 (errorCode "project-not-found") for unknown names.
       case "not-found":
+        return `Couldn't find a project called “${projectId}”. Check the spelling against your project's web address.`;
       case "invalid-response":
-        return `Couldn't find a project called “${projectId}”. Check the name in your project's web address.`;
+        return "1001 Albums Generator sent something unexpected. Try again shortly.";
       case "rate-limited":
         return "1001 Albums Generator is busy. Wait a minute and try again.";
       case "network":

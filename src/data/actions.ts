@@ -2,8 +2,8 @@ import * as Haptics from "expo-haptics";
 import * as Linking from "expo-linking";
 import * as WebBrowser from "expo-web-browser";
 import { useAtomValue } from "jotai";
-import { useCallback } from "react";
-import { AppState, Share } from "react-native";
+import { useCallback, useEffect, useRef } from "react";
+import { AppState, type NativeEventSubscription, Share } from "react-native";
 
 import { projectPageUrl } from "@/core/client";
 import { pickStreamingLinks } from "@/core/streaming";
@@ -50,13 +50,26 @@ export function usePreferredLinks(album: Album | null | undefined) {
 }
 
 /**
- * Ratings can only be written on the website (the API is read-only), so open
- * the project page in an in-app browser and refresh once the person is back.
- * iOS resolves when the sheet is dismissed; Android's Custom Tab resolves
- * immediately, so wait for the app to become active again instead.
+ * Opens the project page on 1001 Albums Generator in an in-app browser and
+ * refreshes the project once the person is back, since anything they change
+ * there (ratings, reviews, pausing) only reaches the app through the API.
+ *
+ * iOS resolves when the sheet is dismissed. Android's Custom Tab resolves
+ * immediately, so wait for the app to become active again instead. That
+ * listener is removed when it fires, when a newer call replaces it, or when
+ * the calling component unmounts.
  */
-export function useRateOnSite() {
+export function useOpenProjectPage() {
   const projectId = useAtomValue(projectIdAtom);
+  const pendingReturn = useRef<NativeEventSubscription | null>(null);
+
+  const clearPendingReturn = useCallback(() => {
+    pendingReturn.current?.remove();
+    pendingReturn.current = null;
+  }, []);
+
+  useEffect(() => clearPendingReturn, [clearPendingReturn]);
+
   return useCallback(async () => {
     if (!projectId) return;
     selectionHaptic();
@@ -68,11 +81,20 @@ export function useRateOnSite() {
       await refreshProject(projectId);
       return;
     }
+    clearPendingReturn();
     const subscription = AppState.addEventListener("change", (state) => {
       if (state !== "active") return;
+      if (pendingReturn.current === subscription) pendingReturn.current = null;
       subscription.remove();
       void refreshProject(projectId);
     });
+    pendingReturn.current = subscription;
     await WebBrowser.openBrowserAsync(url);
-  }, [projectId]);
+  }, [projectId, clearPendingReturn]);
 }
+
+/**
+ * Ratings and reviews can only be written on the website (the API is
+ * read-only), so rating means opening the project page and refreshing after.
+ */
+export const useRateOnSite = useOpenProjectPage;

@@ -86,7 +86,7 @@ export function GroupBars({ groups, limit = 8 }: { groups: GroupStat[]; limit?: 
 function AlbumLink({ entry, children }: { entry: HistoryEntry; children: React.ReactNode }) {
   const theme = useTheme();
   return (
-    <Link href={{ pathname: "/album/[slug]", params: { slug: entry.album.slug } }} asChild>
+    <Link href={{ pathname: "/album/[slug]", params: { slug: entry.album.slug, position: String(entry.position) } }} asChild>
       <Pressable android_ripple={{ color: theme.colors.fill }} style={({ pressed }) => [pressed && theme.isIOS && { opacity: 0.6 }]}>
         {children}
       </Pressable>

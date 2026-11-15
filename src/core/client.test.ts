@@ -93,7 +93,8 @@ describe("createAlbumsClient", () => {
   });
 
   it.each([
-    [response(404, {}), "not-found"],
+    // The live API's body for an unknown project (checked 14 Nov 2026).
+    [response(404, { error: true, errorCode: "project-not-found", message: "Project Not Found" }), "not-found"],
     [response(429, {}, { "retry-after": "30" }), "rate-limited"],
     [response(503, {}), "server"],
     [response(200, new SyntaxError("Unexpected token <")), "invalid-response"],

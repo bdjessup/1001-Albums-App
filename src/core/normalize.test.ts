@@ -35,8 +35,18 @@ describe("normalizeRating", () => {
 describe("normalizeProject", () => {
   const project = normalizeProject(projectRaw);
 
-  it("sorts history oldest first and drops unusable entries", () => {
-    expect(project.history.map((e) => e.album.slug)).toEqual([
+  it("drops unusable entries but keeps each entry's API position", () => {
+    expect(project.history.map((e) => [e.album.slug, e.position])).toEqual([
+      ["channel-orange", 1],
+      ["surfer-rosa", 2],
+      ["suicide", 4],
+      ["whats-the-story-morning-glory", 6],
+    ]);
+  });
+
+  it("sorts out-of-order history oldest first as a safety net", () => {
+    const shuffled = normalizeProject({ ...projectRaw, history: [...projectRaw.history].reverse() });
+    expect(shuffled.history.map((e) => e.album.slug)).toEqual([
       "channel-orange",
       "surfer-rosa",
       "suicide",
@@ -56,6 +66,14 @@ describe("normalizeProject", () => {
     expect(project.updateFrequency).toBe("dailyWithWeekends");
   });
 
+  it("takes paused and schedule from the group for group members", () => {
+    const { paused: _paused, updateFrequency: _frequency, ...rest } = projectRaw;
+    const member = normalizeProject({ ...rest, group: { slug: "g", paused: true, updateFrequency: "daily" } });
+    expect(member.paused).toBe(true);
+    expect(member.updateFrequency).toBe("daily");
+    expect(normalizeProject({ ...rest, group: { paused: false } }).paused).toBe(false);
+  });
+
   it("throws on payloads that are not a project", () => {
     expect(() => normalizeProject({ error: "nope" })).toThrow(InvalidResponseError);
     expect(() => normalizeProject("<html>")).toThrow(InvalidResponseError);
@@ -65,11 +83,22 @@ describe("normalizeProject", () => {
 describe("normalizeAlbumStats", () => {
   it("keeps valid entries only", () => {
     const stats = normalizeAlbumStats(albumStatsRaw);
-    expect(stats.stats).toHaveLength(1);
-    expect(stats.stats[0]!.globalAverageRating).toBe(2.51);
+    expect(stats.albums).toEqual([
+      {
+        name: "All Hope Is Gone",
+        artist: "Slipknot",
+        slug: "all-hope-is-gone",
+        spotifyId: "0hFWapnP7orzXCMwNU5DuA",
+        averageRating: 2.51,
+        votes: 1000,
+        controversialScore: 1.1,
+      },
+    ]);
   });
 
-  it("throws without a stats array", () => {
+  it("throws without an albums array", () => {
     expect(() => normalizeAlbumStats({})).toThrow(InvalidResponseError);
+    // The shape the third-party client assumed; the live API doesn't send it.
+    expect(() => normalizeAlbumStats({ stats: [] })).toThrow(InvalidResponseError);
   });
 });

@@ -71,12 +71,13 @@ export function normalizeRating(value: unknown): AlbumRating {
   return null;
 }
 
-function normalizeHistoryEntry(value: unknown): HistoryEntry | null {
+function normalizeHistoryEntry(value: unknown, index: number): HistoryEntry | null {
   if (!isObject(value)) return null;
   const album = normalizeAlbum(value.album);
   const generatedAt = str(value.generatedAt);
   if (!album || !generatedAt || Number.isNaN(Date.parse(generatedAt))) return null;
   return {
+    position: index + 1,
     album,
     rating: normalizeRating(value.rating),
     review: str(value.review)?.trim() || null,
@@ -90,17 +91,22 @@ export function normalizeProject(value: unknown): Project {
   if (!isObject(value)) throw new InvalidResponseError("Project response was not an object");
   const name = str(value.name);
   if (!name) throw new InvalidResponseError("Project response had no name");
+  // The API sends history oldest first; the sort is only a safety net, with
+  // API position breaking ties so numbering and order always agree.
   const history = Array.isArray(value.history)
     ? value.history
         .map(normalizeHistoryEntry)
         .filter((e): e is HistoryEntry => e !== null)
-        .sort((a, b) => Date.parse(a.generatedAt) - Date.parse(b.generatedAt))
+        .sort((a, b) => Date.parse(a.generatedAt) - Date.parse(b.generatedAt) || a.position - b.position)
     : [];
+  // Group members get their schedule from the group, and the live API only
+  // sends `paused` there.
+  const group = isObject(value.group) ? value.group : {};
   return {
     name,
     shareableUrl: str(value.shareableUrl),
-    paused: value.paused === true,
-    updateFrequency: str(value.updateFrequency) ?? "daily",
+    paused: value.paused === true || group.paused === true,
+    updateFrequency: str(value.updateFrequency) ?? str(group.updateFrequency) ?? "daily",
     currentAlbum: normalizeAlbum(value.currentAlbum),
     currentAlbumNotes: str(value.currentAlbumNotes)?.trim() || null,
     history,
@@ -109,29 +115,26 @@ export function normalizeProject(value: unknown): Project {
 
 function normalizeStatEntry(value: unknown): AlbumStatEntry | null {
   if (!isObject(value)) return null;
-  const albumSlug = str(value.albumSlug);
-  const albumName = str(value.albumName);
-  if (!albumSlug || !albumName) return null;
+  const slug = str(value.slug);
+  const name = str(value.name);
+  const averageRating = num(value.averageRating);
+  if (!slug || !name || averageRating === null) return null;
   return {
-    albumName,
-    albumArtist: str(value.albumArtist) ?? "",
-    albumSlug,
-    albumSpotifyId: str(value.albumSpotifyId),
-    albumCoverUrl: str(value.albumCoverUrl),
-    averageRating: num(value.averageRating) ?? 0,
-    totalRating: num(value.totalRating) ?? 0,
-    totalVotes: num(value.totalVotes) ?? 0,
-    globalAverageRating: num(value.globalAverageRating) ?? 0,
-    globalTotalRating: num(value.globalTotalRating) ?? 0,
-    globalTotalVotes: num(value.globalTotalVotes) ?? 0,
+    name,
+    artist: str(value.artist) ?? "",
+    slug,
+    spotifyId: str(value.spotifyId),
+    averageRating,
+    votes: num(value.votes) ?? 0,
+    controversialScore: num(value.controversialScore),
   };
 }
 
 export function normalizeAlbumStats(value: unknown): AlbumStats {
-  if (!isObject(value) || !Array.isArray(value.stats)) {
-    throw new InvalidResponseError("Album stats response had no stats array");
+  if (!isObject(value) || !Array.isArray(value.albums)) {
+    throw new InvalidResponseError("Album stats response had no albums array");
   }
-  return { stats: value.stats.map(normalizeStatEntry).filter((e): e is AlbumStatEntry => e !== null) };
+  return { albums: value.albums.map(normalizeStatEntry).filter((e): e is AlbumStatEntry => e !== null) };
 }
 
 export function slugify(text: string): string {

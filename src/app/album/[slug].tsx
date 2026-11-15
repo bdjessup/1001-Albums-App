@@ -12,17 +12,19 @@ import { globalRatingFor } from "@/core/stats";
 import { shareAlbum } from "@/data/actions";
 import { useAlbumColors } from "@/data/album-colors";
 import { useAlbumStats, useNumberedHistory, useProject } from "@/data/queries";
-import { NAV_BAR_HEIGHT } from "@/theme/layout";
+import { useHeaderInset } from "@/theme/layout";
 
 const dateFormat = new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric", year: "numeric" });
 
 export default function AlbumScreen() {
-  const { slug } = useLocalSearchParams<{ slug: string }>();
+  // `position` picks the right entry when an album came up more than once.
+  const { slug, position } = useLocalSearchParams<{ slug: string; position?: string }>();
   const insets = useSafeAreaInsets();
+  const headerInset = useHeaderInset();
   const { data: project, isPending } = useProject();
   const history = useNumberedHistory();
   const { data: albumStats } = useAlbumStats();
-  const entry = findEntry(history, slug);
+  const entry = findEntry(history, slug, position ? Number(position) : undefined);
   const album = entry?.album ?? (project?.currentAlbum?.slug === slug ? project.currentAlbum : null);
   const colors = useAlbumColors(album);
 
@@ -48,7 +50,7 @@ export default function AlbumScreen() {
         <AlbumHero
           album={album}
           colors={colors}
-          topInset={insets.top + NAV_BAR_HEIGHT}
+          topInset={headerInset}
           eyebrow={entry ? `Album ${entry.number} · ${dateFormat.format(new Date(entry.generatedAt))}` : "Today"}
           // The cover is where the zoom transition from History lands (iOS 18+).
           wrapCover={(cover) => <Link.AppleZoomTarget>{cover}</Link.AppleZoomTarget>}

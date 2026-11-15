@@ -16,7 +16,7 @@ import {
 import { AppText } from "@/components/text";
 import { formatAverage } from "@/core/album";
 import { computeStats } from "@/core/stats";
-import { useAlbumStats, useProject, usePullToRefresh } from "@/data/queries";
+import { useProject, usePullToRefresh } from "@/data/queries";
 import { useTheme } from "@/theme/theme-context";
 
 const countFormat = new Intl.NumberFormat();
@@ -26,11 +26,7 @@ export default function StatsScreen() {
   const theme = useTheme();
   const { data: project, error, isPending, refetch } = useProject();
   const { refreshing, onRefresh } = usePullToRefresh(refetch);
-  const { data: albumStats } = useAlbumStats();
-  const stats = useMemo(
-    () => (project ? computeStats(project.history, { albumStats }) : null),
-    [project, albumStats],
-  );
+  const stats = useMemo(() => (project ? computeStats(project.history) : null), [project]);
 
   if (isPending) return <LoadingView />;
   if (!project || !stats) return <ErrorView error={error} onRetry={() => refetch()} />;

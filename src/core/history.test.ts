@@ -1,19 +1,51 @@
 import { describe, expect, it } from "vitest";
 
-import { albumStatsRaw, projectRaw } from "./__fixtures__/project";
+import { projectRaw } from "./__fixtures__/project";
 import { currentAlbumNumber, filterHistory, findEntry, numberHistory, sectionByMonth } from "./history";
-import { normalizeAlbumStats, normalizeProject } from "./normalize";
-import { computeStats, globalRatingFor } from "./stats";
+import { normalizeProject } from "./normalize";
 
 const project = normalizeProject(projectRaw);
 const entries = numberHistory(project.history);
 const slugs = (list: { album: { slug: string } }[]) => list.map((e) => e.album.slug);
 
-describe("filterHistory", () => {
-  it("numbers albums in generation order", () => {
-    expect(entries.map((e) => e.number)).toEqual([1, 2, 3, 4]);
-    expect(findEntry(entries, "surfer-rosa")?.number).toBe(2);
+describe("numberHistory", () => {
+  it("numbers albums by their API position, so dropped entries leave gaps", () => {
+    // Positions 3 and 5 were malformed and dropped.
+    expect(entries.map((e) => [e.album.slug, e.number])).toEqual([
+      ["channel-orange", 1],
+      ["surfer-rosa", 2],
+      ["suicide", 4],
+      ["whats-the-story-morning-glory", 6],
+    ]);
   });
+
+  it("keeps later numbers when an earlier entry goes bad", () => {
+    const history = [...projectRaw.history];
+    history[0] = { ...history[0]!, generatedAt: "garbage" };
+    const numbered = numberHistory(normalizeProject({ ...projectRaw, history }).history);
+    expect(numbered.map((e) => e.number)).toEqual([2, 4, 6]);
+  });
+});
+
+describe("findEntry", () => {
+  const first = { ...projectRaw.history[0]! };
+  const repeat = { ...first, rating: 3, generatedAt: "2026-10-05T05:00:00.000Z" };
+  const repeated = numberHistory(normalizeProject({ ...projectRaw, history: [...projectRaw.history, repeat] }).history);
+
+  it("finds by slug", () => {
+    expect(findEntry(entries, "surfer-rosa")?.number).toBe(2);
+    expect(findEntry(entries, "nope")).toBeUndefined();
+  });
+
+  it("uses the position to tell repeats apart, and defaults to the latest", () => {
+    expect(findEntry(repeated, "channel-orange", 1)?.rating).toBe(5);
+    expect(findEntry(repeated, "channel-orange", 7)?.rating).toBe(3);
+    expect(findEntry(repeated, "channel-orange")?.number).toBe(7);
+    expect(findEntry(repeated, "channel-orange", 99)?.number).toBe(7);
+  });
+});
+
+describe("filterHistory", () => {
 
   it("sorts newest first by default", () => {
     expect(slugs(filterHistory(entries, {}))).toEqual([
@@ -68,47 +100,17 @@ describe("sectionByMonth", () => {
 });
 
 describe("currentAlbumNumber", () => {
-  it("counts the current album after the history", () => {
-    expect(currentAlbumNumber(project)).toBe(5);
+  it("counts the current album after the last API position", () => {
+    expect(currentAlbumNumber(project)).toBe(7);
   });
 
   it("doesn't double count when the history already ends with it", () => {
     const last = project.history[project.history.length - 1]!;
-    expect(currentAlbumNumber({ history: project.history, currentAlbum: last.album })).toBe(4);
-  });
-});
-
-describe("computeStats", () => {
-  const stats = computeStats(project.history, { minGenreRatings: 1 });
-
-  it("summarises progress and ratings", () => {
-    expect(stats).toMatchObject({ generated: 4, total: 1001, rated: 3, didNotListen: 1, unrated: 0, reviews: 2 });
-    expect(stats.average).toBeCloseTo(11 / 3);
-    expect(stats.distribution).toEqual([0, 1, 0, 1, 1]);
+    expect(currentAlbumNumber({ history: project.history, currentAlbum: last.album })).toBe(6);
   });
 
-  it("compares with the global average on the same albums", () => {
-    expect(stats.globalAverage).toBeCloseTo((3.9 + 3.7 + 3.6) / 3);
-    expect(stats.lovedMoreThanMost.map((d) => d.entry.album.slug)).toEqual(["channel-orange", "surfer-rosa"]);
-    expect(stats.likedLessThanMost.map((d) => d.entry.album.slug)).toEqual(["whats-the-story-morning-glory"]);
-    expect(stats.likedLessThanMost[0]!.delta).toBeCloseTo(-1.6);
-  });
-
-  it("groups by decade and genre", () => {
-    expect(stats.decades.map((d) => d.label)).toEqual(["1970s", "1980s", "1990s", "2010s"]);
-    expect(stats.genres[0]).toMatchObject({ key: "rock", count: 3, rated: 2 });
-    expect(stats.favoriteGenres[0]!.label).toBe("Hip-Hop");
-  });
-
-  it("tracks rating streaks", () => {
-    expect(stats.longestRatedStreak).toBe(2);
-    expect(stats.currentRatedStreak).toBe(1);
-  });
-
-  it("uses the generator's pool size when album stats are loaded", () => {
-    const albumStats = normalizeAlbumStats(albumStatsRaw);
-    expect(computeStats(project.history, { albumStats }).total).toBe(4);
-    expect(globalRatingFor(albumStats, { slug: "all-hope-is-gone", spotifyId: null })).toEqual({ average: 2.51, votes: 1000 });
-    expect(globalRatingFor(albumStats, { slug: "nope", spotifyId: null })).toBeNull();
+  it("is album 1 for a new project and null with no current album", () => {
+    expect(currentAlbumNumber({ history: [], currentAlbum: project.currentAlbum })).toBe(1);
+    expect(currentAlbumNumber({ history: project.history, currentAlbum: null })).toBeNull();
   });
 });

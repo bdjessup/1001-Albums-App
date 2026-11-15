@@ -1,0 +1,417 @@
+{
+  "shareableUrl": "https://1001albumsgenerator.com/shares/5f8b57d27f98111d5afe4e31",
+  "currentAlbum": {
+    "uuid": "5f34ee8bf0857e55ed5ec0d7",
+    "artist": "Nick Drake",
+    "artistOrigin": "uk",
+    "images": [
+      {
+        "height": 634,
+        "url": "https://i.scdn.co/image/76ae6932784595a9c2e2794a18bc190e6c68bf23",
+        "width": 640
+      },
+      {
+        "height": 297,
+        "url": "https://i.scdn.co/image/498076ad404fcecd3b624f5018c67630fcbaab5d",
+        "width": 300
+      },
+      {
+        "height": 63,
+        "url": "https://i.scdn.co/image/5f9aa44faa1e7d324c698b4db25eb7a11885d3f2",
+        "width": 64
+      }
+    ],
+    "genres": [
+      "folk",
+      "rock"
+    ],
+    "styles": [
+      "singer-songwriter",
+      "folk-rock"
+    ],
+    "subGenres": [
+      "british-folk",
+      "folk",
+      "folk-rock",
+      "melancholia",
+      "rock",
+      "singer-songwriter"
+    ],
+    "name": "Bryter Layter",
+    "slug": "bryter-layter",
+    "releaseDate": "1971",
+    "globalReviewsUrl": "https://1001albumsgenerator.com/albums/7w9Og10Tdkh3nqrVD1D5IW/bryter-layter",
+    "wikipediaUrl": "https://en.wikipedia.org/wiki/Bryter_Layter",
+    "spotifyId": "7w9Og10Tdkh3nqrVD1D5IW",
+    "appleMusicId": "1440723775",
+    "tidalId": 313954106,
+    "amazonMusicId": "B000W1U75U",
+    "youtubeMusicId": "OLAK5uy_k8xN-xqzvKwJPpXu74Pq5iTN0Q2oSzeGs",
+    "qobuzId": "v1kzr3ybn5w2b",
+    "deezerId": "119076"
+  },
+  "currentAlbumNotes": "",
+  "updateFrequency": "dailyWithWeekends",
+  "history": [
+    {
+      "generatedAlbumId": "60f9322688a88f0966cb04e8",
+      "album": {
+        "uuid": "5f34ee8bf0857e55ed5ebf90",
+        "artist": "The Smashing Pumpkins",
+        "artistOrigin": "us",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/781f636483f9f08e9f183021e81812cdd0512b7e",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/e478c9aa6b08b1816ec54f47a1fbfca38875e0aa",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/89a28e6997c35385dd71237dbffb4d0ca1297584",
+            "width": 64
+          }
+        ],
+        "genres": [
+          "rock"
+        ],
+        "styles": [
+          "grunge",
+          "alternative-rock"
+        ],
+        "subGenres": [
+          "alternative-metal",
+          "alternative-rock",
+          "grunge",
+          "permanent-wave",
+          "pop-rock",
+          "rock"
+        ],
+        "name": "Mellon Collie and the Infinite Sadness",
+        "slug": "mellon-collie-and-the-infinite-sadness",
+        "releaseDate": "1995",
+        "globalReviewsUrl": "https://1001albumsgenerator.com/albums/4bPT6Q8ppaSNppk1kbEbLl/mellon-collie-and-the-infinite-sadness",
+        "wikipediaUrl": "https://en.wikipedia.org/wiki/Mellon_Collie_and_the_Infinite_Sadness",
+        "spotifyId": "4bPT6Q8ppaSNppk1kbEbLl",
+        "appleMusicId": "721224313",
+        "tidalId": 79279089,
+        "amazonMusicId": "B00AOMN0G0",
+        "youtubeMusicId": "OLAK5uy_k00TJUAla-j386Kzl12O6C8TBcyFxBo48",
+        "qobuzId": "5099997855354",
+        "deezerId": "6163131"
+      },
+      "rating": "did-not-listen",
+      "review": "",
+      "reviewIsPrivate": false,
+      "revealedAlbum": false,
+      "generatedAt": "2020-10-17T03:25:05.474Z",
+      "globalRating": 3.68
+    },
+    {
+      "generatedAlbumId": "60f9322688a88f0966cb04e9",
+      "album": {
+        "uuid": "5f34ee8bf0857e55ed5ebfca",
+        "artist": "Kate Bush",
+        "artistOrigin": "uk",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/19bf6b264f13461e4d6b06d1e4f5a874ccfedab0",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/f43e56da19bcaff2bf003e9006e4149e314ed7cc",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/0799957eb98a7a46b2d4849b295571de3bad217f",
+            "width": 64
+          }
+        ],
+        "genres": [
+          "pop",
+          "rock"
+        ],
+        "styles": [
+          "singer-songwriter",
+          "art-rock",
+          "baroque-pop",
+          "experimental",
+          "pop-rock"
+        ],
+        "subGenres": [
+          "art-pop",
+          "art-rock",
+          "baroque-pop",
+          "new-wave-pop",
+          "permanent-wave",
+          "piano-rock",
+          "singer-songwriter"
+        ],
+        "name": "Hounds Of Love",
+        "slug": "hounds-of-love",
+        "releaseDate": "1985",
+        "globalReviewsUrl": "https://1001albumsgenerator.com/albums/5BWl0bB1q0TqyFmkBEupZy/hounds-of-love",
+        "wikipediaUrl": "https://en.wikipedia.org/wiki/Hounds_of_Love",
+        "spotifyId": "5BWl0bB1q0TqyFmkBEupZy",
+        "appleMusicId": "1441652820",
+        "tidalId": 279765005,
+        "amazonMusicId": "B01N4EOVBW",
+        "youtubeMusicId": "OLAK5uy_mE6o0DJvG3N0AVXee09Gcn7eE0IOR7jLk",
+        "qobuzId": "ta6wfwyzmmghc",
+        "deezerId": "413452427"
+      },
+      "rating": "did-not-listen",
+      "review": "",
+      "reviewIsPrivate": false,
+      "revealedAlbum": false,
+      "generatedAt": "2020-10-18T03:25:04.253Z",
+      "globalRating": 3.64
+    },
+    {
+      "generatedAlbumId": "60f9322688a88f0966cb04ea",
+      "album": {
+        "uuid": "5f34ee8bf0857e55ed5ec03d",
+        "artist": "The Clash",
+        "artistOrigin": "uk",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/a522c89d9d23539071d1f4b334dc2d50cabc3693",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/84ca0f9564ae1eff9163a6a1dfae2a10b1d60a6a",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/f5dd8399a2d82d776c9da3832b562b532c288201",
+            "width": 64
+          }
+        ],
+        "genres": [
+          "punk"
+        ],
+        "styles": [],
+        "subGenres": [
+          "classic-rock",
+          "permanent-wave",
+          "punk",
+          "rock"
+        ],
+        "name": "London Calling",
+        "slug": "london-calling",
+        "releaseDate": "1979",
+        "globalReviewsUrl": "https://1001albumsgenerator.com/albums/6FCzvataOZh68j8OKzOt9a/london-calling",
+        "wikipediaUrl": "https://en.wikipedia.org/wiki/London_Calling_(album)",
+        "spotifyId": "6FCzvataOZh68j8OKzOt9a",
+        "appleMusicId": "684811762",
+        "tidalId": 21785493,
+        "amazonMusicId": "B00EQRJLQC",
+        "youtubeMusicId": "OLAK5uy_keWoQUGetv5n5E7f2Zrg36XPMeLcKNXl4",
+        "qobuzId": "0886443520721",
+        "deezerId": "6856704"
+      },
+      "review": "",
+      "reviewIsPrivate": false,
+      "revealedAlbum": false,
+      "generatedAt": "2020-10-19T03:25:03.527Z",
+      "globalRating": 3.96
+    },
+    {
+      "generatedAlbumId": "60f9322688a88f0966cb0520",
+      "album": {
+        "uuid": "5f34ee8bf0857e55ed5ebfca",
+        "artist": "Kate Bush",
+        "artistOrigin": "uk",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/19bf6b264f13461e4d6b06d1e4f5a874ccfedab0",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/f43e56da19bcaff2bf003e9006e4149e314ed7cc",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/0799957eb98a7a46b2d4849b295571de3bad217f",
+            "width": 64
+          }
+        ],
+        "genres": [
+          "pop",
+          "rock"
+        ],
+        "styles": [
+          "singer-songwriter",
+          "art-rock",
+          "baroque-pop",
+          "experimental",
+          "pop-rock"
+        ],
+        "subGenres": [
+          "art-pop",
+          "art-rock",
+          "baroque-pop",
+          "new-wave-pop",
+          "permanent-wave",
+          "piano-rock",
+          "singer-songwriter"
+        ],
+        "name": "Hounds Of Love",
+        "slug": "hounds-of-love",
+        "releaseDate": "1985",
+        "globalReviewsUrl": "https://1001albumsgenerator.com/albums/5BWl0bB1q0TqyFmkBEupZy/hounds-of-love",
+        "wikipediaUrl": "https://en.wikipedia.org/wiki/Hounds_of_Love",
+        "spotifyId": "5BWl0bB1q0TqyFmkBEupZy",
+        "appleMusicId": "1441652820",
+        "tidalId": 279765005,
+        "amazonMusicId": "B01N4EOVBW",
+        "youtubeMusicId": "OLAK5uy_mE6o0DJvG3N0AVXee09Gcn7eE0IOR7jLk",
+        "qobuzId": "ta6wfwyzmmghc",
+        "deezerId": "413452427"
+      },
+      "review": "",
+      "reviewIsPrivate": false,
+      "revealedAlbum": false,
+      "generatedAt": "2020-12-11T04:25:01.990Z",
+      "globalRating": 3.64
+    },
+    {
+      "generatedAlbumId": "63688644bd73b418eb5e45da",
+      "album": {
+        "uuid": "5f34ee8bf0857e55ed5eadd4",
+        "artist": "Adele",
+        "artistOrigin": "uk",
+        "images": [
+          {
+            "height": 640,
+            "url": "https://i.scdn.co/image/ab67616d0000b273fb7eedd9877b0c60597ef3e5",
+            "width": 640
+          },
+          {
+            "height": 300,
+            "url": "https://i.scdn.co/image/ab67616d00001e02fb7eedd9877b0c60597ef3e5",
+            "width": 300
+          },
+          {
+            "height": 64,
+            "url": "https://i.scdn.co/image/ab67616d00004851fb7eedd9877b0c60597ef3e5",
+            "width": 64
+          }
+        ],
+        "genres": [
+          "pop"
+        ],
+        "styles": [
+          "acoustic",
+          "neo-soul"
+        ],
+        "subGenres": [
+          "british-soul",
+          "pop",
+          "pop-soul",
+          "uk-pop"
+        ],
+        "name": "21",
+        "slug": "21",
+        "releaseDate": "2011",
+        "globalReviewsUrl": "https://1001albumsgenerator.com/albums/5duyQokC4FMcWPYTV9Gpf9/21",
+        "wikipediaUrl": "https://en.wikipedia.org/wiki/21_(Adele_album)",
+        "spotifyId": "5duyQokC4FMcWPYTV9Gpf9",
+        "appleMusicId": "1544491232",
+        "tidalId": 165813921,
+        "amazonMusicId": "B08QDQMVJ1",
+        "youtubeMusicId": "OLAK5uy_lT9WWb7WZ6MOzwNkItv6Azu835h17W_L0",
+        "qobuzId": "0634904052065",
+        "deezerId": "746059"
+      },
+      "rating": 3,
+      "review": "",
+      "reviewIsPrivate": true,
+      "revealedAlbum": false,
+      "generatedAt": "2022-11-06T04:15:00.437Z",
+      "globalRating": 3.69
+    },
+    {
+      "generatedAlbumId": "69856ae5d36c3f2bade3dd2b",
+      "album": {
+        "uuid": "5f34ee8bf0857e55ed5ebf52",
+        "artist": "Echo And The Bunnymen",
+        "artistOrigin": "uk",
+        "images": [
+          {
+            "height": 635,
+            "url": "https://i.scdn.co/image/385f6159af839ec0d3e3b8f0375c0d75eb5b9010",
+            "width": 640
+          },
+          {
+            "height": 298,
+            "url": "https://i.scdn.co/image/553e2e481745b3bc3429b980833a88bd7f2a957f",
+            "width": 300
+          },
+          {
+            "height": 63,
+            "url": "https://i.scdn.co/image/42f7aa71f3e0b816d8d7835bd77f5d433971bd54",
+            "width": 63
+          }
+        ],
+        "genres": [
+          "rock",
+          "punk"
+        ],
+        "styles": [
+          "new-wave",
+          "post-punk",
+          "alternative-rock"
+        ],
+        "subGenres": [
+          "alternative-rock",
+          "art-rock",
+          "dream-pop",
+          "new-romantic",
+          "new-wave",
+          "new-wave-pop",
+          "permanent-wave",
+          "post-punk",
+          "punk",
+          "rock"
+        ],
+        "name": "Crocodiles",
+        "slug": "crocodiles",
+        "releaseDate": "1980",
+        "globalReviewsUrl": "https://1001albumsgenerator.com/albums/44aVVevMGKS4q6nWXbELpP/crocodiles",
+        "wikipediaUrl": "https://en.wikipedia.org/wiki/Crocodiles_(album)",
+        "spotifyId": "44aVVevMGKS4q6nWXbELpP",
+        "appleMusicId": "299807766",
+        "tidalId": 10906916,
+        "amazonMusicId": "B002LQ3Y3Q",
+        "youtubeMusicId": "OLAK5uy_kaSi2iW8_YPWslMbwlxfopTW4ZD_nLFyg",
+        "qobuzId": "0075992743365",
+        "deezerId": "381996"
+      },
+      "review": "",
+      "reviewIsPrivate": true,
+      "revealedAlbum": false,
+      "generatedAt": "2026-02-05T04:15:33.650Z",
+      "globalRating": 3.04
+    }
+  ],
+  "group": {
+    "slug": "test",
+    "paused": true,
+    "updateFrequency": "dailyWithWeekends"
+  },
+  "name": "grouptestone"
+}

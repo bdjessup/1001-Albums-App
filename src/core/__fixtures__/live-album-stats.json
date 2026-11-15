@@ -1,0 +1,159 @@
+{
+  "albums": [
+    {
+      "votes": 32453,
+      "averageRating": 4.45,
+      "genres": [
+        "rock"
+      ],
+      "styles": [
+        "soft-rock",
+        "pop-rock",
+        "aor"
+      ],
+      "name": "Rumours",
+      "artist": "Fleetwood Mac",
+      "artistOrigin": "other",
+      "releaseDate": "1977",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/31ee3e4265ba3c5098a8928c05d001a3b3033710",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://i.scdn.co/image/12fe04b0eb5ba5ecbfa9f508da60c2669719102e",
+          "width": 300
+        },
+        {
+          "height": 64,
+          "url": "https://i.scdn.co/image/81e87467e4daac8335eb2c332cb964f3b5cc30d4",
+          "width": 64
+        }
+      ],
+      "slug": "rumours",
+      "id": "63k57x0qOkUWEMR0dkMivh",
+      "spotifyId": "63k57x0qOkUWEMR0dkMivh",
+      "controversialScore": 0.8050886427627162,
+      "globalReviewsUrl": "https://1001albumsgenerator.com/albums/63k57x0qOkUWEMR0dkMivh/rumours"
+    },
+    {
+      "votes": 24081,
+      "averageRating": 3.13,
+      "genres": [
+        "electronica",
+        "rock"
+      ],
+      "styles": [
+        "trip-hop",
+        "downtempo",
+        "experimental"
+      ],
+      "name": "Third",
+      "artist": "Portishead",
+      "artistOrigin": "uk",
+      "releaseDate": "2008",
+      "images": [
+        {
+          "height": 636,
+          "url": "https://i.scdn.co/image/7bf16fcb2a5d48fba8c70c54b9d4b5ad05131fc6",
+          "width": 640
+        },
+        {
+          "height": 298,
+          "url": "https://i.scdn.co/image/9a54b448a98eacbf1470323f0b11ff7061e655d2",
+          "width": 300
+        },
+        {
+          "height": 64,
+          "url": "https://i.scdn.co/image/db4a54c2ae873e9552efabe58569d2cac8bda8cf",
+          "width": 64
+        }
+      ],
+      "slug": "third",
+      "id": "18JyZd2XLdT2rmekw6EwoS",
+      "spotifyId": "18JyZd2XLdT2rmekw6EwoS",
+      "controversialScore": 1.1278176226001186,
+      "globalReviewsUrl": "https://1001albumsgenerator.com/albums/18JyZd2XLdT2rmekw6EwoS/third"
+    },
+    {
+      "votes": 22484,
+      "averageRating": 2.47,
+      "genres": [
+        "rock",
+        "jazz"
+      ],
+      "styles": [
+        "psychedelic-rock",
+        "jazz-rock",
+        "progressive-rock"
+      ],
+      "name": "Third",
+      "artist": "Soft Machine",
+      "artistOrigin": "uk",
+      "releaseDate": "1970",
+      "images": [
+        {
+          "height": 640,
+          "url": "https://i.scdn.co/image/ab67616d0000b273660561ea691a62bed9cdbff0",
+          "width": 640
+        },
+        {
+          "height": 300,
+          "url": "https://i.scdn.co/image/ab67616d00001e02660561ea691a62bed9cdbff0",
+          "width": 300
+        },
+        {
+          "height": 64,
+          "url": "https://i.scdn.co/image/ab67616d00004851660561ea691a62bed9cdbff0",
+          "width": 64
+        }
+      ],
+      "slug": "third",
+      "id": "111J9nxmdhyHSLNHeAL1jO",
+      "spotifyId": "111J9nxmdhyHSLNHeAL1jO",
+      "controversialScore": 1.1148850083617614,
+      "globalReviewsUrl": "https://1001albumsgenerator.com/albums/111J9nxmdhyHSLNHeAL1jO/third"
+    },
+    {
+      "votes": 1413,
+      "averageRating": 3.64,
+      "genres": [
+        "rock"
+      ],
+      "styles": [
+        "goth-rock",
+        "alternative-rock"
+      ],
+      "name": "Songs Of A Lost World",
+      "artist": "The Cure",
+      "artistOrigin": "uk",
+      "releaseDate": "2024",
+      "images": [
+        {
+          "url": "https://i.scdn.co/image/ab67616d0000b2738613a922e2b503736fb2f91f",
+          "height": 640,
+          "width": 640
+        },
+        {
+          "url": "https://i.scdn.co/image/ab67616d00001e028613a922e2b503736fb2f91f",
+          "height": 300,
+          "width": 300
+        },
+        {
+          "url": "https://i.scdn.co/image/ab67616d000048518613a922e2b503736fb2f91f",
+          "height": 64,
+          "width": 64
+        }
+      ],
+      "slug": "songs-of-a-lost-world",
+      "id": "4wjxmqXnSQvBZWL3IbYngX",
+      "spotifyId": "4wjxmqXnSQvBZWL3IbYngX",
+      "controversialScore": 0.9382724814415041,
+      "inactive": false,
+      "addedInEdition": 2026,
+      "globalReviewsUrl": "https://1001albumsgenerator.com/albums/4wjxmqXnSQvBZWL3IbYngX/songs-of-a-lost-world"
+    }
+  ]
+}

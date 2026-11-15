@@ -49,3 +49,6 @@ yarn-error.*
 google-service-account.json
 google-services.json
 GoogleService-Info.plist
+
+# CI bundle check output
+dist-check/

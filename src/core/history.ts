@@ -23,13 +23,18 @@ export const HISTORY_SORTS: readonly { value: HistorySort; label: string }[] = [
   { value: "release", label: "Release year" },
 ];
 
-/** An entry plus its position in the project (1 = first album generated). */
+/** An entry plus its album number in the project (1 = first album generated). */
 export interface NumberedEntry extends HistoryEntry {
   number: number;
 }
 
+/**
+ * Numbers come from each entry's position in the API response, not its index
+ * after normalising, so a dropped malformed entry leaves a gap instead of
+ * renumbering every later album.
+ */
 export const numberHistory = (history: readonly HistoryEntry[]): NumberedEntry[] =>
-  history.map((entry, index) => ({ ...entry, number: index + 1 }));
+  history.map((entry) => ({ ...entry, number: entry.position }));
 
 const fold = (text: string) =>
   text
@@ -111,11 +116,21 @@ export function sectionByMonth<T extends HistoryEntry>(entries: readonly T[], lo
 export function currentAlbumNumber(project: Pick<Project, "history" | "currentAlbum">): number | null {
   if (!project.currentAlbum) return null;
   const last = project.history[project.history.length - 1];
+  if (!last) return 1;
   // Some projects already list today's album as the last history entry.
-  if (last && last.album.uuid === project.currentAlbum.uuid) return project.history.length;
-  return project.history.length + 1;
+  if (last.album.uuid === project.currentAlbum.uuid) return last.position;
+  return last.position + 1;
 }
 
-export function findEntry<T extends HistoryEntry>(entries: readonly T[], slug: string): T | undefined {
-  return entries.find((e) => e.album.slug === slug);
+/**
+ * Finds a history entry by album slug. Albums can come up more than once in a
+ * project, so `position` picks the exact entry; without it the most recent
+ * one wins.
+ */
+export function findEntry<T extends HistoryEntry>(entries: readonly T[], slug: string, position?: number): T | undefined {
+  if (position !== undefined) {
+    const exact = entries.find((e) => e.album.slug === slug && e.position === position);
+    if (exact) return exact;
+  }
+  return entries.findLast((e) => e.album.slug === slug);
 }
