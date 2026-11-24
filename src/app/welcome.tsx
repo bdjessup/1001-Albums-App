@@ -1,6 +1,6 @@
 import { Image } from "expo-image";
 import { KeyboardAvoidingView, ScrollView, StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { ConnectForm } from "@/components/connect-form";
 import { Icon, type IconName } from "@/components/icon";
@@ -16,45 +16,52 @@ const FEATURES: { icon: IconName; title: string; body: string }[] = [
 /** First run: shown until a project is connected (see the root layout's guards). */
 export default function WelcomeScreen() {
   const theme = useTheme();
-  const insets = useSafeAreaInsets();
   return (
     <KeyboardAvoidingView style={{ flex: 1, backgroundColor: theme.colors.backgroundPlain }} behavior={theme.isIOS ? "padding" : undefined}>
       <ScrollView
-        contentContainerStyle={[styles.content, { paddingTop: insets.top + 48, paddingBottom: insets.bottom + 24 }]}
+        contentInsetAdjustmentBehavior="never"
+        contentContainerStyle={styles.scrollContent}
         keyboardShouldPersistTaps="handled"
       >
-        <View style={styles.hero}>
-          <Image source={require("@/assets/images/splash-icon.png")} style={styles.mark} accessibilityIgnoresInvertColors />
-          <AppText variant="display" align="center" accessibilityRole="header">
-            Liner
-          </AppText>
-          <AppText variant="body" tone="secondary" align="center">
-            A companion for your 1001 Albums Generator project.
-          </AppText>
-        </View>
-
-        <View style={styles.features}>
-          {FEATURES.map((feature) => (
-            <View key={feature.title} style={styles.feature}>
-              <Icon name={feature.icon} size={28} color={theme.colors.accent} style={styles.featureIcon} />
-              <View style={styles.featureText}>
-                <AppText variant="headline">{feature.title}</AppText>
-                <AppText variant="subheadline" tone="secondary">
-                  {feature.body}
-                </AppText>
-              </View>
+        <SafeAreaView cornerAdaptation="horizontal" style={styles.scrollContent}>
+          <View style={styles.content}>
+            <View style={styles.hero}>
+              <Image source={require("@/assets/images/splash-icon.png")} style={styles.mark} accessibilityIgnoresInvertColors />
+              <AppText variant="display" align="center" accessibilityRole="header">
+                1001 Albums Companion
+              </AppText>
+              <AppText variant="body" tone="secondary" align="center">
+                A companion for your 1001 Albums Generator project.
+              </AppText>
             </View>
-          ))}
-        </View>
 
-        <ConnectForm />
+            <View style={styles.features}>
+              {FEATURES.map((feature) => (
+                <View key={feature.title} style={styles.feature}>
+                  <Icon name={feature.icon} size={28} color={theme.colors.accent} style={styles.featureIcon} />
+                  <View style={styles.featureText}>
+                    <AppText variant="headline">{feature.title}</AppText>
+                    <AppText variant="subheadline" tone="secondary">
+                      {feature.body}
+                    </AppText>
+                  </View>
+                </View>
+              ))}
+            </View>
+
+            <ConnectForm />
+          </View>
+        </SafeAreaView>
       </ScrollView>
     </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollContent: { flexGrow: 1 },
   content: {
+    paddingTop: 48,
+    paddingBottom: 24,
     flexGrow: 1,
     justifyContent: "space-between",
     gap: 36,

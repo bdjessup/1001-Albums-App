@@ -1,7 +1,8 @@
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import type { ReactNode } from "react";
-import { StyleSheet, useWindowDimensions, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { SafeAreaView, useSafeAreaFrame, useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { coverUrl, displayGenres, releaseYear } from "@/core/album";
 import { backdropColor } from "@/core/color";
@@ -31,8 +32,11 @@ export function AlbumHero({
   wrapCover?: (cover: ReactNode) => ReactNode;
 }) {
   const theme = useTheme();
-  const { width } = useWindowDimensions();
-  const coverSize = Math.min(width - 96, 340);
+  const { width, height } = useSafeAreaFrame();
+  const { left, right } = useSafeAreaInsets({ cornerAdaptation: "horizontal" });
+  const contentWidth = width - left - right - 48;
+  const sideBySide = contentWidth >= 640;
+  const coverSize = Math.max(1, Math.min(340, height * 0.52, sideBySide ? (contentWidth - 24) / 2 : contentWidth - 48));
   const year = releaseYear(album);
   const backdrop = backdropColor(colors?.background ?? theme.colors.fill, theme.dark);
   const blurred = coverUrl(album, 64);
@@ -51,30 +55,32 @@ export function AlbumHero({
         />
       </View>
 
-      <View style={styles.content}>
+      <SafeAreaView edges={["left", "right"]} cornerAdaptation="horizontal" style={[styles.content, sideBySide && styles.spread]}>
         {wrapCover(<AlbumCover album={album} size={coverSize} large priority="high" />)}
-        <View style={styles.titles}>
-          {eyebrow ? (
-            <AppText variant="caption" tone="secondary" align="center" style={styles.eyebrow}>
-              {eyebrow.toUpperCase()}
+        <View style={[styles.details, sideBySide && styles.column]}>
+          <View style={styles.titles}>
+            {eyebrow ? (
+              <AppText variant="caption" tone="secondary" align="center" style={styles.eyebrow}>
+                {eyebrow.toUpperCase()}
+              </AppText>
+            ) : null}
+            <AppText variant="title" align="center" accessibilityRole="header">
+              {album.name}
             </AppText>
-          ) : null}
-          <AppText variant="title" align="center" accessibilityRole="header">
-            {album.name}
-          </AppText>
-          <AppText variant="title3" tone="accent" align="center">
-            {album.artist}
-          </AppText>
-          {year ? (
-            <AppText variant="subheadline" tone="secondary" align="center" tabular>
-              {year}
+            <AppText variant="title3" tone="accent" align="center">
+              {album.artist}
             </AppText>
-          ) : null}
+            {year ? (
+              <AppText variant="subheadline" tone="secondary" align="center" tabular>
+                {year}
+              </AppText>
+            ) : null}
+          </View>
+          <View style={styles.chips}>
+            <Chips labels={displayGenres(album)} />
+          </View>
         </View>
-        <View style={styles.chips}>
-          <Chips labels={displayGenres(album)} />
-        </View>
-      </View>
+      </SafeAreaView>
     </View>
   );
 }
@@ -93,6 +99,19 @@ const styles = StyleSheet.create({
     gap: 20,
     paddingHorizontal: 24,
     paddingBottom: 8,
+  },
+  spread: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 24,
+  },
+  details: {
+    alignItems: "center",
+    gap: 20,
+  },
+  column: {
+    flex: 1,
+    maxWidth: 360,
   },
   titles: {
     alignItems: "center",

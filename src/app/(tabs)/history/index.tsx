@@ -2,6 +2,7 @@ import { Stack } from "expo-router";
 import { useAtom, useAtomValue } from "jotai";
 import { useCallback, useDeferredValue, useMemo, useState } from "react";
 import { RefreshControl, SectionList, StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { HistoryRow } from "@/components/history-row";
 import { HeaderActions } from "@/components/native/header-actions";
@@ -23,6 +24,7 @@ import { useTheme } from "@/theme/theme-context";
 
 export default function HistoryScreen() {
   const theme = useTheme();
+  const { left, right } = useSafeAreaInsets({ cornerAdaptation: "horizontal" });
   const { data: project, error, isPending, refetch } = useProject();
   const { refreshing, onRefresh } = usePullToRefresh(refetch);
   const entries = useNumberedHistory();
@@ -132,7 +134,7 @@ export default function HistoryScreen() {
         initialNumToRender={14}
         windowSize={11}
         style={{ backgroundColor: theme.colors.background }}
-        contentContainerStyle={sections.length === 0 ? styles.emptyContainer : undefined}
+        contentContainerStyle={[{ paddingLeft: left, paddingRight: right }, sections.length === 0 && styles.emptyContainer]}
         ListEmptyComponent={
           <View style={styles.empty}>
           {filtering ? (

@@ -22,7 +22,7 @@ export default function TabsLayout() {
       iconColor={theme.isIOS ? undefined : { default: theme.colors.textSecondary, selected: theme.colors.text }}
       labelStyle={theme.isIOS ? undefined : { default: { color: theme.colors.textSecondary }, selected: { color: theme.colors.text } }}
     >
-      <NativeTabs.Trigger name="(today)">
+      <NativeTabs.Trigger name="(today)" disableAutomaticContentInsets={theme.isIOS}>
         <NativeTabs.Trigger.Label>Today</NativeTabs.Trigger.Label>
         <NativeTabs.Trigger.Icon sf={{ default: "opticaldisc", selected: "opticaldisc.fill" }} md="album" />
       </NativeTabs.Trigger>

@@ -5,6 +5,7 @@ import { router, Stack } from "expo-router";
 import { useAtom } from "jotai";
 import { Alert, StyleSheet } from "react-native";
 
+import { sfSymbol } from "@/components/icon";
 import { NativeHost } from "@/components/native/native-host";
 import { SettingsChoice } from "@/components/native/settings-choice";
 import { projectPageUrl, SITE_URL } from "@/core/client";
@@ -59,7 +60,7 @@ export default function SettingsScreen() {
     <>
       {theme.isIOS ? (
         <Stack.Toolbar placement="right">
-          <Stack.Toolbar.Button variant="done" onPress={() => router.back()}>
+          <Stack.Toolbar.Button variant="done" icon={sfSymbol("check")} accessibilityLabel="Done" onPress={() => router.back()}>
             Done
           </Stack.Toolbar.Button>
         </Stack.Toolbar>
@@ -105,11 +106,11 @@ export default function SettingsScreen() {
           </FieldGroup.Section>
 
           <FieldGroup.Section title="About">
-            <ListItem supportingText={version}>Liner</ListItem>
+            <ListItem supportingText={version}>1001 Albums Companion</ListItem>
             <ListItem onPress={() => openReader(SITE_URL)}>About 1001 Albums Generator</ListItem>
             <FieldGroup.SectionFooter>
               <Text>
-                Liner is an independent app, not affiliated with 1001 Albums Generator. Album data comes from its public
+                1001 Albums Companion is an independent app, not affiliated with 1001 Albums Generator. Album data comes from its public
                 API; ratings and reviews are saved on its website.
               </Text>
             </FieldGroup.SectionFooter>

@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "Liner",
+    "name": "1001 Companion",
     "slug": "liner",
     "scheme": "liner",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "automatic",
     "ios": {
