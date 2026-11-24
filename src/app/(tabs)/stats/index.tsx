@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { RefreshControl, ScrollView, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { ProgressRing } from "@/components/native/progress-ring";
 import { ScreenMessage } from "@/components/native/screen-message";
@@ -48,94 +49,100 @@ export default function StatsScreen() {
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
       style={{ backgroundColor: theme.colors.background }}
-      contentContainerStyle={styles.content}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} colors={[theme.colors.accent]} />
       }
     >
-      <Section>
-        <View style={styles.progress}>
-          <ProgressRing value={stats.generated} total={stats.total} label={`${percent}%`} color={theme.colors.accent} />
-          <View style={styles.progressText}>
-            <AppText variant="title2" tabular>
-              {countFormat.format(stats.generated)} of {countFormat.format(stats.total)}
-            </AppText>
-            <AppText variant="subheadline" tone="secondary">
-              {remaining > 0 ? `${countFormat.format(remaining)} albums to go` : "You've finished the list"}
-            </AppText>
-            {started ? (
-              <AppText variant="footnote" tone="tertiary">
-                Started {dateFormat.format(started)}
+      <SafeAreaView edges={["left", "right"]} cornerAdaptation="horizontal">
+        <View style={styles.content}>
+          <Section>
+            <View style={styles.progress}>
+              <ProgressRing value={stats.generated} total={stats.total} label={`${percent}%`} color={theme.colors.accent} />
+              <View style={styles.progressText}>
+                <AppText variant="title2" tabular>
+                  {countFormat.format(stats.generated)} of {countFormat.format(stats.total)}
+                </AppText>
+                <AppText variant="subheadline" tone="secondary">
+                  {remaining > 0 ? `${countFormat.format(remaining)} albums to go` : "You've finished the list"}
+                </AppText>
+                {started ? (
+                  <AppText variant="footnote" tone="tertiary">
+                    Started {dateFormat.format(started)}
+                  </AppText>
+                ) : null}
+              </View>
+            </View>
+          </Section>
+
+          <TileRow>
+            <StatTile icon="rate" value={formatAverage(stats.average)} label="Your average rating" />
+            <StatTile icon="globe" value={formatAverage(stats.globalAverage)} label="Everyone, same albums" />
+          </TileRow>
+          <TileRow>
+            <StatTile icon="flame" value={countFormat.format(stats.longestRatedStreak)} label="Longest rating streak" />
+            <StatTile icon="quote" value={countFormat.format(stats.reviews)} label="Reviews written" />
+            <StatTile icon="paused" value={countFormat.format(stats.didNotListen)} label="Didn't listen" />
+          </TileRow>
+
+          {stats.rated > 0 ? (
+            <Section title="Ratings" footer={`${countFormat.format(stats.rated)} rated albums`}>
+              <RatingDistribution distribution={stats.distribution} />
+            </Section>
+          ) : null}
+
+          {stats.fiveStars.length > 0 ? (
+            <View style={styles.shelfSection}>
+              <AppText variant={theme.isIOS ? "title3" : "headline"} style={styles.shelfTitle} accessibilityRole="header">
+                Five stars
               </AppText>
-            ) : null}
-          </View>
+              <CoverShelf entries={stats.fiveStars} />
+            </View>
+          ) : null}
+
+          {stats.lovedMoreThanMost.length > 0 ? (
+            <Section title="You loved these more than most" padded={false}>
+              <DisagreementList items={stats.lovedMoreThanMost} />
+            </Section>
+          ) : null}
+
+          {stats.likedLessThanMost.length > 0 ? (
+            <Section
+              title="Everyone else liked these more"
+              padded={false}
+              footer={
+                stats.averageGap !== null
+                  ? `On average you're ${stats.averageGap.toFixed(1)} stars away from the crowd.`
+                  : undefined
+              }
+            >
+              <DisagreementList items={stats.likedLessThanMost} />
+            </Section>
+          ) : null}
+
+          {stats.favoriteGenres.length > 0 ? (
+            <Section title="Favourite genres" footer="Genres with at least three ratings, by your average.">
+              <GroupBars groups={stats.favoriteGenres} limit={6} />
+            </Section>
+          ) : null}
+
+          <Section title="Most common genres">
+            <GroupBars groups={stats.genres} limit={8} />
+          </Section>
+
+          <Section title="By decade">
+            <GroupBars groups={stats.decades} limit={20} />
+          </Section>
         </View>
-      </Section>
-
-      <TileRow>
-        <StatTile icon="rate" value={formatAverage(stats.average)} label="Your average rating" />
-        <StatTile icon="globe" value={formatAverage(stats.globalAverage)} label="Everyone, same albums" />
-      </TileRow>
-      <TileRow>
-        <StatTile icon="flame" value={countFormat.format(stats.longestRatedStreak)} label="Longest rating streak" />
-        <StatTile icon="quote" value={countFormat.format(stats.reviews)} label="Reviews written" />
-        <StatTile icon="paused" value={countFormat.format(stats.didNotListen)} label="Didn't listen" />
-      </TileRow>
-
-      {stats.rated > 0 ? (
-        <Section title="Ratings" footer={`${countFormat.format(stats.rated)} rated albums`}>
-          <RatingDistribution distribution={stats.distribution} />
-        </Section>
-      ) : null}
-
-      {stats.fiveStars.length > 0 ? (
-        <View style={styles.shelfSection}>
-          <AppText variant={theme.isIOS ? "title3" : "headline"} style={styles.shelfTitle} accessibilityRole="header">
-            Five stars
-          </AppText>
-          <CoverShelf entries={stats.fiveStars} />
-        </View>
-      ) : null}
-
-      {stats.lovedMoreThanMost.length > 0 ? (
-        <Section title="You loved these more than most" padded={false}>
-          <DisagreementList items={stats.lovedMoreThanMost} />
-        </Section>
-      ) : null}
-
-      {stats.likedLessThanMost.length > 0 ? (
-        <Section
-          title="Everyone else liked these more"
-          padded={false}
-          footer={
-            stats.averageGap !== null
-              ? `On average you're ${stats.averageGap.toFixed(1)} stars away from the crowd.`
-              : undefined
-          }
-        >
-          <DisagreementList items={stats.likedLessThanMost} />
-        </Section>
-      ) : null}
-
-      {stats.favoriteGenres.length > 0 ? (
-        <Section title="Favourite genres" footer="Genres with at least three ratings, by your average.">
-          <GroupBars groups={stats.favoriteGenres} limit={6} />
-        </Section>
-      ) : null}
-
-      <Section title="Most common genres">
-        <GroupBars groups={stats.genres} limit={8} />
-      </Section>
-
-      <Section title="By decade">
-        <GroupBars groups={stats.decades} limit={20} />
-      </Section>
+      </SafeAreaView>
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   content: {
+    alignSelf: "center",
+    width: "100%",
+    maxWidth: 760,
     gap: 20,
     padding: 16,
     paddingBottom: 48,

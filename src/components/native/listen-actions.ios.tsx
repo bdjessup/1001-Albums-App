@@ -15,7 +15,7 @@ export function ListenActions({ album, primary, others, accent }: ListenActionsP
   const glass = isLiquidGlassAvailable();
   if (!primary) return null;
   return (
-    <NativeHost matchContents seedColor={accent}>
+    <NativeHost matchContents={{ vertical: true }} style={{ width: "100%" }} seedColor={accent}>
       <HStack spacing={12}>
         <Button
           label={`Play on ${primary.name}`}

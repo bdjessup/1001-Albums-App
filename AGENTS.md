@@ -1,4 +1,4 @@
-# Liner
+# 1001 Albums Companion
 
 Expo iOS/Android app for 1001 Albums Generator. Use Bun; routes are in `src/app`. See `README.md` for setup and native builds.
 

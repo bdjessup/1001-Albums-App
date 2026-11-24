@@ -20,7 +20,7 @@ export function StatTile({ value, label, icon }: { value: string; label: string;
       <AppText variant="title2" tabular numberOfLines={1} adjustsFontSizeToFit>
         {value}
       </AppText>
-      <AppText variant="footnote" tone="secondary" numberOfLines={2}>
+      <AppText variant="footnote" tone="secondary">
         {label}
       </AppText>
     </View>
@@ -155,11 +155,13 @@ export function CoverShelf({ entries }: { entries: HistoryEntry[] }) {
 
 const styles = StyleSheet.create({
   tileRow: {
+    flexWrap: "wrap",
     flexDirection: "row",
     gap: 12,
   },
   tile: {
-    flex: 1,
+    flexGrow: 1,
+    flexBasis: 100,
     gap: 4,
     padding: 14,
     borderCurve: "continuous",

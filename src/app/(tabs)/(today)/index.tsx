@@ -1,5 +1,6 @@
 import { router } from "expo-router";
 import { RefreshControl, ScrollView, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { AlbumBody } from "@/components/album-body";
 import { AlbumHero } from "@/components/album-hero";
@@ -13,7 +14,7 @@ import { computeStats, globalRatingFor, LIST_SIZE } from "@/core/stats";
 import { shareAlbum, useOpenProjectPage } from "@/data/actions";
 import { useAlbumColors } from "@/data/album-colors";
 import { useAlbumStats, useNumberedHistory, useProject, usePullToRefresh } from "@/data/queries";
-import { useHeaderInset, useTabBarInset } from "@/theme/layout";
+import { useHeaderInset } from "@/theme/layout";
 import { useTheme } from "@/theme/theme-context";
 
 const countFormat = new Intl.NumberFormat();
@@ -21,7 +22,6 @@ const countFormat = new Intl.NumberFormat();
 export default function TodayScreen() {
   const theme = useTheme();
   const headerInset = useHeaderInset();
-  const tabBarInset = useTabBarInset();
   const { data: project, error, isPending, refetch } = useProject();
   const { refreshing, onRefresh } = usePullToRefresh(refetch);
   const history = useNumberedHistory();
@@ -87,7 +87,6 @@ export default function TodayScreen() {
       {actions}
       <ScrollView
         contentInsetAdjustmentBehavior="never"
-        contentContainerStyle={{ paddingBottom: tabBarInset + 32 }}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -105,28 +104,31 @@ export default function TodayScreen() {
           topInset={headerInset}
           eyebrow={number ? `Today · Album ${countFormat.format(number)} of ${countFormat.format(total)}` : "Today"}
         />
-        {project.paused ? (
-          <View style={[styles.paused, { backgroundColor: theme.colors.accentSoft }]}>
-            <Icon name="paused" size={20} color={theme.colors.text} />
-            <AppText variant="subheadline" style={styles.pausedText} onPress={openProjectPage}>
-              Your project is paused. New albums resume when you unpause it on 1001 Albums Generator.
-            </AppText>
-          </View>
-        ) : null}
-        <AlbumBody
-          album={album}
-          entry={entry}
-          colors={colors}
-          globalRating={globalRatingFor(albumStats, album)}
-          notes={project.currentAlbumNotes}
-          isToday
-        />
+        <SafeAreaView edges={theme.isIOS ? ["left", "right", "bottom"] : ["left", "right"]} cornerAdaptation="horizontal" style={styles.body}>
+          {project.paused ? (
+            <View style={[styles.paused, { backgroundColor: theme.colors.accentSoft }]}>
+              <Icon name="paused" size={20} color={theme.colors.text} />
+              <AppText variant="subheadline" style={styles.pausedText} onPress={openProjectPage}>
+                Your project is paused. New albums resume when you unpause it on 1001 Albums Generator.
+              </AppText>
+            </View>
+          ) : null}
+          <AlbumBody
+            album={album}
+            entry={entry}
+            colors={colors}
+            globalRating={globalRatingFor(albumStats, album)}
+            notes={project.currentAlbumNotes}
+            isToday
+          />
+        </SafeAreaView>
       </ScrollView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  body: { paddingBottom: 32 },
   paused: {
     flexDirection: "row",
     alignItems: "center",

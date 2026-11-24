@@ -1,8 +1,8 @@
-# Liner
+# 1001 Albums Companion
 
 A native iOS and Android companion for [1001 Albums Generator](https://1001albumsgenerator.com): today's album with one-tap listening, your full history and your listening stats.
 
-> "Liner" is a working name (as in liner notes). The bundle ID is `com.proper.liner`.
+The Home Screen label is **1001 Companion**. The bundle ID is `com.proper.liner`.
 
 Built with **Expo SDK 58** (React Native 0.88, React 19.3, React Compiler), Expo Router, `@expo/ui`, TanStack Query and Jotai.
 

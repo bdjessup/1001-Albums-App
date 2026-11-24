@@ -130,6 +130,9 @@ export function AlbumBody({
 
 const styles = StyleSheet.create({
   container: {
+    width: "100%",
+    maxWidth: 760,
+    alignSelf: "center",
     gap: 24,
     paddingHorizontal: 16,
     paddingTop: 8,
@@ -151,6 +154,7 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   globalDetail: {
+    flex: 1,
     gap: 4,
   },
   delta: {
