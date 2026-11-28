@@ -16,6 +16,10 @@ Expo iOS/Android app for 1001 Albums Generator. Use Bun; routes are in `src/app`
 - Add icons to `ICONS` in `src/components/icon.tsx` with both SF and Material Symbol names. Use semantic theme tokens and `AppText`, not per-screen hard-coded colours/text styles.
 - Never poll the 1001 Albums API. Use `albumsClient`'s shared limiter (about 3 requests/minute) and TanStack Query.
 
+## Branches in this repo
+
+- The working branch is `claude/charming-faraday-l3r9gx`, the GitHub default branch. Treat it as `main`: every change goes through a pull request into it, and never push to it or to the older `main` branch directly. Renaming it is Ben's call.
+
 ## Shared rules
 
 These rules apply in every one of Ben's repos. Repo-specific rules in this file add to them.
